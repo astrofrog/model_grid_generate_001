@@ -1,0 +1,10 @@
+This is the directory contaning the scripts to set up the first set of 
+model grids. The scripts in this directory require the mysg package 
+which is common to all grids in this project.
+
+To run:
+
+  python scripts/list_grids.py
+  python scripts/setup_grids.py
+  python scripts/prepare_hyperion.py
+
