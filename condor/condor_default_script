@@ -1,0 +1,12 @@
++TGProject = "TG-AST090114"
+Executable = hyperion_sph
+arguments = $(ARGS).rtin $(ARGS).rtout
+Log = $(ARGS).log
+Output = $(ARGS).out
+Error = $(ARGS).err
+Universe = Vanilla
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+transfer_input_files = input/$(ARGS).rtin,ISM.hdf5
+Queue
+
