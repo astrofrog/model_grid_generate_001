@@ -11,6 +11,10 @@ from mysg.models import export_dust_files
 
 export_dust_files()
 
+for grids in glob.glob(os.path.join('grids/', '*')):
+    if not os.path.exists('%s/dust' % grids):
+        os.symlink('../../dust/', '%s/dust' % grids)
+
 def setup_model_wrapper(parfile):
     sys.stdout = open(parfile.replace('.par', '_setup.log').replace('/par/', '/log/'), 'wb')
     return setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'))
