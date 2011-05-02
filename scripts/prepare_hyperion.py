@@ -7,7 +7,9 @@ import numpy as np
 np.seterr(all='ignore')
 
 from mysg.hyperion import setup_model
+from mysg.models import export_dust_files
 
+export_dust_files()
 
 def setup_model_wrapper(parfile):
     sys.stdout = open(parfile.replace('.par', '_setup.log').replace('/par/', '/log/'), 'wb')
