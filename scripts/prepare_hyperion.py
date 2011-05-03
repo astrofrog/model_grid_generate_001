@@ -17,8 +17,13 @@ for grids in glob.glob(os.path.join('grids/', '*')):
 
 def setup_model_wrapper(parfile):
     sys.stdout = open(parfile.replace('.par', '_setup.log').replace('/par/', '/log/'), 'wb')
-    return setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'))
-    sys.stdout = sys.__stdout__
+    try:
+        setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'))
+        sys.stdout = sys.__stdout__
+        return True
+    except:
+        sys.stdout = sys.__stdout__
+        return False
 
 # Create a process pool
 p = Pool(processes=16)
@@ -27,4 +32,8 @@ p = Pool(processes=16)
 parfiles = glob.glob(os.path.join('grids/*/par/', '*.par'))
 
 # Create all Hyperion input files
-p.map(setup_model_wrapper, parfiles)
+results = p.map(setup_model_wrapper, parfiles)
+
+for ip in range(len(parfiles)):
+    if not results[ip]:
+        print "%s failed" % parfiles[ip] 
