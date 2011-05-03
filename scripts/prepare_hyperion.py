@@ -13,7 +13,7 @@ export_dust_files()
 
 for grids in glob.glob(os.path.join('grids/', '*')):
     if not os.path.exists('%s/dust' % grids):
-        os.symlink('../../dust/', '%s/dust' % grids)
+        os.symlink('../../dust/d03_5.5_3.0_A.hdf5', '%s/d03_5.5_3.0_A.hdf5' % grids)
 
 def setup_model_wrapper(parfile):
     sys.stdout = open(parfile.replace('.par', '_setup.log').replace('/par/', '/log/'), 'wb')
