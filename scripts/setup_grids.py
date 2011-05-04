@@ -14,6 +14,10 @@ def create_condor_files(directory, set_name):
 
     f = open('%s/%s/condor/dagman.config' % (directory, set_name), 'wb')
     f.write('DAGMAN_MAX_JOBS_SUBMITTED = 1000\n')
+    f.write('DAGMAN_MAX_JOBS_IDLE = 5000\n')
+    f.write('DAGMAN_MAX_SUBMIT_ATTEMPTS = 2\n')
+    f.write('DAGMAN_SUBMIT_DELAY = 1\n')
+    f.write('DAGMAN_RETRY_SUBMIT_FIRST = False\n')
     f.close()
 
     f = open('%s/%s/condor/move.sh' % (directory, set_name), 'wb')
