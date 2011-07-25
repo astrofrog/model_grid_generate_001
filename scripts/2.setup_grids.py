@@ -69,6 +69,6 @@ for line in f.readlines():
     grid = line.strip()
 
     make_set_dir('grids', grid)
-    sample_set_models('grids', grid, lambda x: 100 * 2 ** (max(0, x - 9)))
+    sample_set_models('grids', grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
     create_condor_files('grids', grid)
     create_odyssey_files('grids', grid)
