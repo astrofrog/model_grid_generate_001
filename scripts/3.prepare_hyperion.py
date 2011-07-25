@@ -9,10 +9,10 @@ np.seterr(all='ignore')
 from mysg.hyperion import setup_model
 from mysg.models import export_dust_files
 
-export_dust_files()
+export_dust_files('dust')
 
 for grids in glob.glob(os.path.join('grids/', '*')):
-    if not os.path.exists('%s/dust' % grids):
+    if not os.path.exists('%s/d03_5.5_3.0_A.hdf5' % grids):
         os.symlink('../../dust/d03_5.5_3.0_A.hdf5', '%s/d03_5.5_3.0_A.hdf5' % grids)
 
 def setup_model_wrapper(parfile):
