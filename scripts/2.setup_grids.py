@@ -62,6 +62,30 @@ def create_odyssey_files(directory, set_name):
 
     fsubmit.close()
 
+
+def create_anthill_files(directory, set_name):
+
+    create_dir('%s/%s/anthill' % (directory, set_name))
+    create_dir('%s/%s/anthill/pbs' % (directory, set_name))
+
+    template = open('anthill/template.qsub', 'r').read()
+
+    fsubmit = open('%s/%s/anthill/submit.sh' % (directory, set_name), 'w')
+    fsubmit.write("#!/bin/bash\n\n")
+
+    for model in glob.glob(os.path.join('%s/%s/par/' % (directory, set_name), '*/*.par')):
+
+        model_name = os.path.basename(model).replace('.par', '')
+
+        fpbs = open('%s/%s/anthill/pbs/%s.qsub' % (directory, set_name, model_name), 'w')
+        fpbs.write(template.replace('MODEL_NAME', model_name).replace('SET_NAME', set_name))
+        fpbs.close()
+
+        fsubmit.write('qsub < %s/%s/anthill/pbs/%s.qsub\n' % (directory, set_name, model_name))
+
+    fsubmit.close()
+
+
 create_dir('grids')
 
 for line in open('grids.txt', 'r'):
@@ -70,5 +94,6 @@ for line in open('grids.txt', 'r'):
 
     make_set_dir('grids', grid)
     sample_set_models('grids', grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
-    create_condor_files('grids', grid)
-    create_odyssey_files('grids', grid)
+    # create_condor_files('grids', grid)
+    # create_odyssey_files('grids', grid)
+    create_anthill_files('grids', grid)
