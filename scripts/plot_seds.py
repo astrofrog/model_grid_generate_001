@@ -1,3 +1,5 @@
+from __future__ import unicode_literals, division, print_function
+
 import glob
 import os
 
@@ -7,10 +9,10 @@ matplotlib.use('Agg')
 from hyperion.model import Model
 
 for filename in glob.glob(os.path.join('grids/*/output/*.rtout')):
-    print filename,
+    print(filename,)
     try:
         m = Model(filename.replace('.rtout', ''))
         m.plot_sed(filename='plots/' + os.path.basename(filename.replace('.rtout', '')))
-        print ""
+        print("")
     except:
-        print "failed"
+        print("failed")

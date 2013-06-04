@@ -1,3 +1,5 @@
+from __future__ import unicode_literals, division, print_function
+
 import glob
 import os
 import shutil
@@ -24,7 +26,7 @@ def create_condor_files(directory, set_name):
     f.write('#!/bin/sh\n/bin/mv $1.rtout output/\n/bin/mv $1.{out,err} log/\n')
     f.close()
 
-    os.chmod('%s/%s/condor/move.sh' % (directory, set_name), 0744)
+    os.chmod('%s/%s/condor/move.sh' % (directory, set_name), 0o744)
 
     f = open('%s/%s/condor/submit' % (directory, set_name), 'wb')
     f.write('CONFIG condor/dagman.config\n\n')

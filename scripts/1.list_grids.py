@@ -1,5 +1,3 @@
-import numpy as np
-
 from mysg.util import combinations
 
 # 1. Source

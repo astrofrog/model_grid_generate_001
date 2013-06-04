@@ -1,3 +1,5 @@
+from __future__ import unicode_literals, division, print_function
+
 import os
 import glob
 import sys
@@ -36,4 +38,4 @@ results = p.map(setup_model_wrapper, parfiles)
 
 for ip in range(len(parfiles)):
     if not results[ip]:
-        print "%s failed" % parfiles[ip]
+        print("%s failed" % parfiles[ip])
