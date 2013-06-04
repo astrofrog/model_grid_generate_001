@@ -60,7 +60,7 @@ for model in remove:
 models.sort()
 
 # Write the grids out to a file
-f = open('grids.txt', 'wb')
+f = open('grids.txt', 'w')
 for model in models:
     f.write("%s\n" % model)
 f.close()

@@ -18,7 +18,7 @@ for grids in glob.glob(os.path.join('grids/', '*')):
         os.symlink('../../d03_5.5_3.0_A.hdf5', '%s/d03_5.5_3.0_A.hdf5' % grids)
 
 def setup_model_wrapper(parfile):
-    sys.stdout = open(parfile.replace('.par', '_setup.log').replace('/par/', '/log/'), 'wb')
+    sys.stdout = open(parfile.replace('.par', '_setup.log').replace('/par/', '/log/'), 'w')
     try:
         setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'))
         sys.stdout = sys.__stdout__

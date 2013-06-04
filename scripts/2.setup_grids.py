@@ -14,7 +14,7 @@ def create_condor_files(directory, set_name):
 
     shutil.copy('condor/condor_default_script', '%s/%s/condor/condor_script' % (directory, set_name))
 
-    f = open('%s/%s/condor/dagman.config' % (directory, set_name), 'wb')
+    f = open('%s/%s/condor/dagman.config' % (directory, set_name), 'w')
     f.write('DAGMAN_MAX_JOBS_SUBMITTED = 1000\n')
     f.write('DAGMAN_MAX_JOBS_IDLE = 5000\n')
     f.write('DAGMAN_MAX_SUBMIT_ATTEMPTS = 2\n')
@@ -22,16 +22,16 @@ def create_condor_files(directory, set_name):
     f.write('DAGMAN_RETRY_SUBMIT_FIRST = False\n')
     f.close()
 
-    f = open('%s/%s/condor/move.sh' % (directory, set_name), 'wb')
+    f = open('%s/%s/condor/move.sh' % (directory, set_name), 'w')
     f.write('#!/bin/sh\n/bin/mv $1.rtout output/\n/bin/mv $1.{out,err} log/\n')
     f.close()
 
     os.chmod('%s/%s/condor/move.sh' % (directory, set_name), 0o744)
 
-    f = open('%s/%s/condor/submit' % (directory, set_name), 'wb')
+    f = open('%s/%s/condor/submit' % (directory, set_name), 'w')
     f.write('CONFIG condor/dagman.config\n\n')
 
-    for model in glob.glob(os.path.join('%s/%s/par/' % (directory, set_name), '*.par')):
+    for model in glob.glob(os.path.join('%s/%s/par/' % (directory, set_name), '*/*.par')):
         model_name = os.path.basename(model).replace('.par', '')
         f.write('JOB %s condor/condor_script\n' % model_name)
         f.write('VARS %s Args = "%s"\n' % (model_name, model_name))
@@ -45,16 +45,16 @@ def create_odyssey_files(directory, set_name):
     create_dir('%s/%s/odyssey' % (directory, set_name))
     create_dir('%s/%s/odyssey/pbs' % (directory, set_name))
 
-    template = open('odyssey/template.pbs', 'rb').read()
+    template = open('odyssey/template.pbs', 'r').read()
 
-    fsubmit = open('%s/%s/odyssey/submit.sh' % (directory, set_name), 'wb')
+    fsubmit = open('%s/%s/odyssey/submit.sh' % (directory, set_name), 'w')
     fsubmit.write("#!/bin/bash\n\n")
 
-    for model in glob.glob(os.path.join('%s/%s/par/' % (directory, set_name), '*.par')):
+    for model in glob.glob(os.path.join('%s/%s/par/' % (directory, set_name), '*/*.par')):
 
         model_name = os.path.basename(model).replace('.par', '')
 
-        fpbs = open('%s/%s/odyssey/pbs/%s.pbs' % (directory, set_name, model_name), 'wb')
+        fpbs = open('%s/%s/odyssey/pbs/%s.pbs' % (directory, set_name, model_name), 'w')
         fpbs.write(template.replace('MODEL_NAME', model_name).replace('SET_NAME', set_name))
         fpbs.close()
 
@@ -64,9 +64,7 @@ def create_odyssey_files(directory, set_name):
 
 create_dir('grids')
 
-f = open('grids.txt', 'rb')
-
-for line in f.readlines():
+for line in open('grids.txt', 'r'):
 
     grid = line.strip()
 
