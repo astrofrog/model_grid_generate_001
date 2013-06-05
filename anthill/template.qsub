@@ -5,4 +5,5 @@
 #$ -o grids/SET_NAME/log/MODEL_NAME.out
 #$ -e grids/SET_NAME/log/MODEL_NAME.err
 #####################################
+python scripts/3.prepare_hyperion_indiv.py grids/SET_NAME/par/MODEL_NAME.par
 hyperion_sph grids/SET_NAME/input/MODEL_NAME.rtin grids/SET_NAME/output/MODEL_NAME.rtout

@@ -66,7 +66,7 @@ def create_odyssey_files(directory, set_name):
 def create_anthill_files(directory, set_name):
 
     create_dir('%s/%s/anthill' % (directory, set_name))
-    create_dir('%s/%s/anthill/pbs' % (directory, set_name))
+    create_dir('%s/%s/anthill/qsub' % (directory, set_name))
 
     template = open('anthill/template.qsub', 'r').read()
 
@@ -76,12 +76,21 @@ def create_anthill_files(directory, set_name):
     for model in glob.glob(os.path.join('%s/%s/par/' % (directory, set_name), '*/*.par')):
 
         model_name = os.path.basename(model).replace('.par', '')
+        short_name = model_name[:2].lower()
 
-        fpbs = open('%s/%s/anthill/pbs/%s.qsub' % (directory, set_name, model_name), 'w')
-        fpbs.write(template.replace('MODEL_NAME', model_name).replace('SET_NAME', set_name))
-        fpbs.close()
+        qsub_dir = '%s/%s/anthill/qsub/%s' % (directory, set_name, short_name)
+        if not os.path.exists(qsub_dir):
+            os.mkdir(qsub_dir)
 
-        fsubmit.write('qsub < %s/%s/anthill/pbs/%s.qsub\n' % (directory, set_name, model_name))
+        log_dir = '%s/%s/log/%s' % (directory, set_name, short_name)
+        if not os.path.exists(log_dir):
+            os.mkdir(log_dir)
+
+        fqsub = open('%s/%s/anthill/qsub/%s/%s.qsub' % (directory, set_name, short_name, model_name), 'w')
+        fqsub.write(template.replace('MODEL_NAME', short_name + '/' + model_name).replace('SET_NAME', set_name))
+        fqsub.close()
+
+        fsubmit.write('qsub < %s/%s/anthill/qsub/%s/%s.qsub\n' % (directory, set_name, short_name, model_name))
 
     fsubmit.close()
 
