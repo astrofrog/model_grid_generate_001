@@ -19,14 +19,7 @@ if not os.path.exists('d03_5.5_3.0_A.hdf5'):
 #        os.symlink('../../d03_5.5_3.0_A.hdf5', '%s/d03_5.5_3.0_A.hdf5' % grids)
 
 def setup_model_wrapper(parfile):
-    sys.stdout = open(parfile.replace('.par', '_setup.log').replace('/par/', '/log/'), 'w')
-    try:
-        setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'))
-        sys.stdout = sys.__stdout__
-        return True
-    except:
-        sys.stdout = sys.__stdout__
-        return False
+    setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'))
 
 par_file = sys.argv[1]
 if not os.path.exists(par_file):
