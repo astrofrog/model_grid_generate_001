@@ -93,7 +93,7 @@ def create_anthill_files(directory, set_name):
             os.mkdir(log_dir)
 
         fqsub = open('%s/%s/anthill/qsub/%s/%s.qsub' % (directory, set_name, short_name, model_name), 'w')
-        fqsub.write(template.replace('MODEL_NAME', short_name + '/' + model_name).replace('SET_NAME', set_name))
+        fqsub.write(template.replace('MODEL_NAME', short_name + '/' + model_name).replace('SET_NAME', set_name).replace('GRIDS_NAME', directory))
         fqsub.close()
 
         fsubmit.write('qsub < %s/%s/anthill/qsub/%s/%s.qsub\n' % (directory, set_name, short_name, model_name))
