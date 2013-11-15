@@ -101,10 +101,12 @@ def create_anthill_files(directory, set_name):
     fsubmit.close()
 
 
-create_dir('grids')
+grids_dir = 'grids-' + VERSION
+
+create_dir(grids_dir)
 
 # Write out meta-data
-f = open(os.path.join('grids', 'INFO'), 'wb')
+f = open(os.path.join(grids_dir, 'INFO'), 'wb')
 f.write("date = {0}\n".format(datetime.now().isoformat()))
 f.write("grid_version = {0}\n".format(VERSION))
 f.write("hyperion_version = {0}\n".format(hyperion.__version__))
@@ -115,14 +117,14 @@ for line in open('grids.txt', 'r'):
 
     grid = line.strip()
 
-    make_set_dir('grids', grid)
+    make_set_dir(grids_dir, grid)
 
     # Number of models for test run (including 0.1 version)
-    sample_set_models('grids', grid, lambda x: 50 * 2 ** (max(0, x - 9)))
+    sample_set_models(grids_dir, grid, lambda x: 50 * 2 ** (max(0, x - 9)))
 
     # Number of models for full run:
-    # sample_set_models('grids', grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
+    # sample_set_models(grids_dir, grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
 
-    # create_condor_files('grids', grid)
-    # create_odyssey_files('grids', grid)
-    create_anthill_files('grids', grid)
+    # create_condor_files(grids_dir, grid)
+    # create_odyssey_files(grids_dir, grid)
+    create_anthill_files(grids_dir, grid)
