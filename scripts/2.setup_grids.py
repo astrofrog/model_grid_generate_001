@@ -3,9 +3,15 @@ from __future__ import unicode_literals, division, print_function
 import glob
 import os
 import shutil
+from datetime import datetime
+
+import mysg
+import hyperion
 
 from mysg.models import make_set_dir, sample_set_models
 from mysg.util import create_dir
+
+VERSION = "0.1"
 
 
 def create_condor_files(directory, set_name):
@@ -97,12 +103,26 @@ def create_anthill_files(directory, set_name):
 
 create_dir('grids')
 
+# Write out meta-data
+f = open(os.path.join('grids', 'INFO'), 'wb')
+f.write("date = {0}\n".format(datetime.now().isoformat()))
+f.write("grid_version = {0}\n".format(VERSION))
+f.write("hyperion_version = {0}\n".format(hyperion.__version__))
+f.write("mysg_version = {0}\n".format(mysg.__version__))
+f.close()
+
 for line in open('grids.txt', 'r'):
 
     grid = line.strip()
 
     make_set_dir('grids', grid)
-    sample_set_models('grids', grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
+
+    # Number of models for test run (including 0.1 version)
+    sample_set_models('grids', grid, lambda x: 50 * 2 ** (max(0, x - 9)))
+
+    # Number of models for full run:
+    # sample_set_models('grids', grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
+
     # create_condor_files('grids', grid)
     # create_odyssey_files('grids', grid)
     create_anthill_files('grids', grid)
