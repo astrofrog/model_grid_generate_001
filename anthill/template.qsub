@@ -3,7 +3,6 @@
 #$ -cwd
 #$ -m n
 #$ -l h_rt=10:00:00
-#$ -p +20
 #$ -M robitaille@mpia.de
 #$ -o GRIDS_NAME/SET_NAME/log/MODEL_NAME.out
 #$ -e GRIDS_NAME/SET_NAME/log/MODEL_NAME.err
