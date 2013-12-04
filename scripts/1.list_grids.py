@@ -49,6 +49,13 @@ for model in models:
     if model[4] == 'h' and model[:4] == 's---':
         remove.append(model)
 
+# Remove models that are too challenging for now
+for model in models:
+
+    # Models with a power-law envelope, a disk, but no cavity (because these models are 2d but very inefficient)
+    if model[2] == 'p' and model[1] != '-' and model[3] == '-':
+        remove.append(model)
+
 # Remove duplicates
 remove = list(set(remove))
 
