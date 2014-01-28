@@ -2,8 +2,9 @@ from __future__ import unicode_literals, division, print_function
 
 import glob
 import os
-import numpy as np
+import sys
 
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 
@@ -11,12 +12,18 @@ from hyperion.model import ModelOutput
 from hyperion.util.constants import au
 import matplotlib.pyplot as plt
 
+if len(sys.argv) != 2:
+    print("Usage: python {0} directory".format(sys.argv[0]))
+    sys.exit(0)
+else:
+    directory = sys.argv[1]
+
 fig = plt.figure(figsize=(12,16))
 
 NX = 5
 NY = 10
 
-for grid in glob.glob(os.path.join('grids-0.1.4-test','s*-')):
+for grid in glob.glob(os.path.join(directory,'s*-')):
 
     grid_name = os.path.basename(grid)
     print(grid_name)
