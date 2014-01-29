@@ -11,7 +11,7 @@ import hyperion
 from mysg.models import make_set_dir, sample_set_models
 from mysg.util import create_dir
 
-VERSION = "0.1.5"
+VERSION = "0.1.6"
 
 
 def create_condor_files(directory, set_name):
