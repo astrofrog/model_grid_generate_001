@@ -2,6 +2,7 @@
 #$ -S /bin/bash
 #$ -cwd
 #$ -m n
+#$ -p -1024
 #$ -l h_rt=48:00:00
 #$ -M robitaille@mpia.de
 #$ -o GRIDS_NAME/SET_NAME/log/MODEL_NAME.out
