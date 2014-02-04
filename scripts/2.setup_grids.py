@@ -120,10 +120,10 @@ for line in open('grids.txt', 'r'):
     make_set_dir(grids_dir, grid)
 
     # Number of models for test run (including 0.1 version)
-    sample_set_models(grids_dir, grid, lambda x: 50 * 2 ** (max(0, x - 9)))
+    # sample_set_models(grids_dir, grid, lambda x: 50 * 2 ** (max(0, x - 9)))
 
     # Number of models for full run:
-    # sample_set_models(grids_dir, grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
+    sample_set_models(grids_dir, grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
 
     # create_condor_files(grids_dir, grid)
     # create_odyssey_files(grids_dir, grid)
