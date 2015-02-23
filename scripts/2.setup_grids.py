@@ -11,8 +11,8 @@ import hyperion
 from mysg.models import make_set_dir, sample_set_models
 from mysg.util import create_dir
 
-VERSION = "1.0.0"
-
+VERSION = "1.0.1"
+UPDATE = False
 
 def create_condor_files(directory, set_name):
 
@@ -71,8 +71,11 @@ def create_odyssey_files(directory, set_name):
 
 def create_anthill_files(directory, set_name):
 
-    create_dir('%s/%s/anthill' % (directory, set_name))
-    create_dir('%s/%s/anthill/qsub' % (directory, set_name))
+    if not os.path.exists('%s/%s/anthill' % (directory, set_name)):
+        os.mkdir('%s/%s/anthill' % (directory, set_name))
+
+    if not os.path.exists('%s/%s/anthill/qsub' % (directory, set_name)):
+        os.mkdir('%s/%s/anthill/qsub' % (directory, set_name))
 
     template = open('anthill/template.qsub', 'r').read()
 
@@ -92,21 +95,34 @@ def create_anthill_files(directory, set_name):
         if not os.path.exists(log_dir):
             os.mkdir(log_dir)
 
-        fqsub = open('%s/%s/anthill/qsub/%s/%s.qsub' % (directory, set_name, short_name, model_name), 'w')
-        fqsub.write(template.replace('MODEL_NAME', short_name + '/' + model_name).replace('SET_NAME', set_name).replace('GRIDS_NAME', directory))
-        fqsub.close()
+        output_name = "%s/%s/output/%s/%s.rtout" % (directory, set_name, short_name, model_name)
+        qsub_name = '%s/%s/anthill/qsub/%s/%s.qsub' % (directory, set_name, short_name, model_name)
 
-        fsubmit.write('qsub < %s/%s/anthill/qsub/%s/%s.qsub\n' % (directory, set_name, short_name, model_name))
+        if not os.path.exists(output_name):
+
+            fqsub = open(qsub_name, 'w')
+            fqsub.write(template.replace('MODEL_NAME', model_name).replace('SET_NAME', set_name).replace('GRIDS_NAME', directory).replace('SHORT_NAME', short_name))
+            fqsub.close()
+
+            fsubmit.write('qsub < %s/%s/anthill/qsub/%s/%s.qsub\n' % (directory, set_name, short_name, model_name))
 
     fsubmit.close()
 
 
 grids_dir = 'grids-' + VERSION
 
-create_dir(grids_dir)
+if not UPDATE:
+    create_dir(grids_dir)
 
 # Write out meta-data
-f = open(os.path.join(grids_dir, 'INFO'), 'wb')
+info_name = os.path.join(grids_dir, 'INFO')
+if os.path.exists(info_name):
+    suffix = 1
+    while os.path.exists(info_name + '.' + str(suffix)):
+        suffix += 1
+    info_name = info_name + '.' + str(suffix)
+
+f = open(info_name, 'wb')
 f.write("date = {0}\n".format(datetime.now().isoformat()))
 f.write("grid_version = {0}\n".format(VERSION))
 f.write("hyperion_version = {0}\n".format(hyperion.__version__))
@@ -117,13 +133,15 @@ for line in open('grids.txt', 'r'):
 
     grid = line.strip()
 
-    make_set_dir(grids_dir, grid)
+    if not UPDATE:
+        make_set_dir(grids_dir, grid)
 
     # Number of models for test run (including 0.1 version)
     # sample_set_models(grids_dir, grid, lambda x: 50 * 2 ** (max(0, x - 9)))
 
     # Number of models for full run:
-    sample_set_models(grids_dir, grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
+    if not UPDATE:
+        sample_set_models(grids_dir, grid, lambda x: 10000 * 2 ** (max(0, x - 9)))
 
     # create_condor_files(grids_dir, grid)
     # create_odyssey_files(grids_dir, grid)
