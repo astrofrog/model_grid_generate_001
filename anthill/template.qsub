@@ -12,4 +12,4 @@
 echo "Starting job "$JOB_ID" to run MODEL_NAME"
 source /home/robitaille/anaconda/bin/activate production
 python scripts/3.prepare_hyperion_indiv.py GRIDS_NAME/SET_NAME/par/SHORT_NAME/MODEL_NAME.par
-/home/robitaille/usr_hyperion/bin/hyperion_sph GRIDS_NAME/SET_NAME/input/SHORT_NAME/MODEL_NAME.rtin GRIDS_NAME/SET_NAME/output/SHORT_NAME/MODEL_NAME.rtout
+/home/robitaille/anaconda/envs/production/bin/hyperion_sph GRIDS_NAME/SET_NAME/input/SHORT_NAME/MODEL_NAME.rtin GRIDS_NAME/SET_NAME/output/SHORT_NAME/MODEL_NAME.rtout
