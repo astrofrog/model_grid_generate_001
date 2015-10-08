@@ -17,7 +17,7 @@ def quantity_table(model_out):
 
     # Radius
 
-    t['radius'] = g.r  # radius at the center of each cell
+    t['radius'] = g.r_wall[1:]  # radius at the outer wall of each cell
 
     # Density
 
@@ -38,7 +38,7 @@ def quantity_table(model_out):
     return t
 
 
-def rerun_sed(model_out):
+def setup_sed(model_out):
 
     # Read in model, and derive table of radial temperatures/densities
     m = Model.read(model_out, only_initial=False)
@@ -74,8 +74,7 @@ def rerun_sed(model_out):
     # We disable temperature iterations and re-set the number of photons
     m.set_n_initial_iterations(0)
     m.n_photons.clear()
-    m.set_n_photons(imaging=1e6,
-                    raytracing_sources=10000, raytracing_dust=1e6)
+    m.set_n_photons(imaging=1e6, raytracing_sources=10000, raytracing_dust=1e6)
 
     # When we read in the model above, the link to the dust file is lost, so we
     # replace the dust object by the filename to avoid making the size of
@@ -89,4 +88,4 @@ model_out = sys.argv[1]
 if not os.path.exists(model_out):
     raise IOError("File does not exist: " + model_out)
 
-rerun_sed(model_out)
+setup_sed(model_out)
