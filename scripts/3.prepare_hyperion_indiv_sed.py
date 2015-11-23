@@ -54,6 +54,7 @@ def setup_sed(model_out):
     density_diff = mo.get_quantities()['density_diff'][0].array
 
     # Apply difference to model density
+    print("Removing sublimated dust")
     density = m.grid['density'][0].array
     density += density_diff
 
