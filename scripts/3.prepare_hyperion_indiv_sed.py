@@ -42,10 +42,27 @@ def setup_sed(model_out):
 
     # Read in model, and derive table of radial temperatures/densities
     m = Model.read(model_out, only_initial=False)
-    t = quantity_table(model_out)
+    
+    # The above code will retrieve the *initial* density of the model
+    # but we need to take into account dust sublimation. Unfortunately
+    # there is no built-in way to do this in Hyperion (yet) so we need
+    # to retrieve the density_diff ourselves from the model output and
+    # apply it to the density array.
+
+    # Get density_diff, which gives final density - original density
+    mo = ModelOutput(model_out)
+    density_diff = mo.get_quantities()['density_diff'][0].array
+
+    # Apply difference to model density
+    density = m.grid['density'][0].array
+    density += density_diff
 
     # Find radius at which all temperatures are below 11K and all densities are
-    # below 1.1e-23, which we will treat as the background.
+    # below 1.1e-23, which we will treat as the background. For this we 
+    # don't care so much about dust sublimation since that affects the 
+    # inner regions.
+
+    t = quantity_table(model_out)
 
     temp = np.nonzero(t['temperature_max'] > 11.)[0]
     dens = np.nonzero(t['density_max'] > 1.1e-23)[0]
