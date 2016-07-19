@@ -15,7 +15,7 @@ if not os.path.exists('d03_5.5_3.0_A_sub.hdf5'):
     export_dust_files('.')
 
 def setup_model_wrapper(parfile):
-    setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'))
+    setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'), imaging=False)
 
 par_file = sys.argv[1]
 if not os.path.exists(par_file):
