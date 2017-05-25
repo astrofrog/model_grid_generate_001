@@ -39,7 +39,7 @@ for grid in glob.glob(os.path.join(directory, 's??????-----')):
 
     times = p.map(find_time, models)
 
-    f = open(grid.replace(directory, 'times/') + '.times', 'w')
+    f = open(grid.replace(directory, 'times/') + '_sed.times', 'w')
     for i in range(len(models)):
         f.write("{:s} {:.3f}\n".format(models[i], times[i]))
     f.close()

@@ -39,6 +39,8 @@ for grid in glob.glob(os.path.join(directory, 's??????-----')):
     for gridlet in glob.glob(os.path.join(grid, 'output', '??')):
         models += glob.glob(os.path.join(gridlet, '*.rtout'))
 
+    models = [model for model in models if '_sed' not in model]
+
     if len(models) == 0:
         continue
 

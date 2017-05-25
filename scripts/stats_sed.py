@@ -19,11 +19,13 @@ def find_time(filename):
         sed = frt['Peeled']['group_00001']['seds']
         frt.close()
     except:
+        print("PROBLEM", filename)
+        raise
         return -1.
     else:
         return cpu_time
 
-p = Pool()
+p = Pool(processes=1)
 
 grids = []
 total = []

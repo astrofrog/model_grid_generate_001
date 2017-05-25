@@ -43,13 +43,15 @@ def create_anthill_files_sed(directory, set_name):
         output_name = "%s/%s/output/%s/%s_sed.rtout" % (directory, set_name, short_name, model_name)
         qsub_name = '%s/%s/anthill/qsub/%s/%s_sed.qsub' % (directory, set_name, short_name, model_name)
 
-        if not os.path.exists(output_name):
+        # We should only run this if neither the output_file nor the version
+        # WITHOUT scattering exists:
+
+        if not os.path.exists(output_name) and not os.path.exists(output_name.replace('sed.rtout', 'sed_noscat.rtout')):
 
             fqsub = open(qsub_name, 'w')
             fqsub.write(template.replace('MODEL_NAME', model_name).replace('SET_NAME', set_name).replace('GRIDS_NAME', directory).replace('SHORT_NAME', short_name))
             fqsub.close()
 
-            fsubmit.write('sleep 2\n')
             fsubmit.write('qsub < %s/%s/anthill/qsub/%s/%s_sed.qsub\n' % (directory, set_name, short_name, model_name))
 
     fsubmit.close()
