@@ -1,7 +1,0 @@
-#!/bin/bash
-#BSUB -u trobitaille@cfa.harvard.edu
-#BSUB -q normal_serial
-#BSUB -J MODEL_NAME
-#BSUB -o grids/SET_NAME/log/MODEL_NAME.out
-#BSUB -e grids/SET_NAME/log/MODEL_NAME.err
-hyperion_sph grids/SET_NAME/input/MODEL_NAME.rtin grids/SET_NAME/output/MODEL_NAME.rtout
