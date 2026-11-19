@@ -42,7 +42,11 @@ To set up the grids:
 This writes one job script per model, and the jobs are then submitted with
 e.g. `submit_all.sh`. Each job runs `scripts/3.prepare_hyperion_indiv.py` to
 write the Hyperion input file for the model, then runs Hyperion to compute
-the temperatures.
+the temperatures. The job scripts are written from the templates in the
+`anthill` directory, which are for a Grid Engine cluster and activate a conda
+environment named `production` that should contain mysg and Hyperion: the
+path to the conda installation needs to be set in these before setting up the
+grids.
 
 The SEDs are computed in a second step, once the first one has completed:
 

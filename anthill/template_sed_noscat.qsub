@@ -5,11 +5,10 @@
 #$ -N JMODEL_NAME
 #$ -p -1023
 #$ -l h_rt=24:00:00
-#$ -M robitaille@mpia.de
 #$ -o GRIDS_NAME/SET_NAME/log/SHORT_NAME/MODEL_NAME_sed_noscat.out
 #$ -e GRIDS_NAME/SET_NAME/log/SHORT_NAME/MODEL_NAME_sed_noscat.err
 #####################################
 echo "Starting job "$JOB_ID" to run MODEL_NAME"
-source /home/robitaille/anaconda/bin/activate production
+source /path/to/conda/bin/activate production
 python scripts/3.prepare_hyperion_indiv_sed_noscat.py GRIDS_NAME/SET_NAME/output/SHORT_NAME/MODEL_NAME.rtout
-/home/robitaille/anaconda/envs/production/bin/hyperion_sph GRIDS_NAME/SET_NAME/input/SHORT_NAME/MODEL_NAME_sed_noscat.rtin GRIDS_NAME/SET_NAME/output/SHORT_NAME/MODEL_NAME_sed_noscat.rtout
+hyperion_sph GRIDS_NAME/SET_NAME/input/SHORT_NAME/MODEL_NAME_sed_noscat.rtin GRIDS_NAME/SET_NAME/output/SHORT_NAME/MODEL_NAME_sed_noscat.rtout
