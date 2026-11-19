@@ -1,7 +1,6 @@
 import os
 import glob
 import h5py
-import numpy as np
 from multiprocessing import Pool
 
 def find_killed(filename):
@@ -10,14 +9,14 @@ def find_killed(filename):
 
     try:
         frt = h5py.File(filename, 'r')
-    except:
+    except Exception:
         return -1
 
     for iter in range(1, 11):
         try:
             k1 = frt['iteration_{0:05d}'.format(iter)].attrs['killed_photons_geo']
             k2 = frt['iteration_{0:05d}'.format(iter)].attrs['killed_photons_int']
-        except:
+        except Exception:
             break
         else:
             ktot = k1 + k2
@@ -42,8 +41,6 @@ for grid in glob.glob('grids/s??????-----'):
 
     killed = p.map(find_killed, models)
 
-    f = open(grid.replace('grids', 'killed') + '.killed', 'w')
-    for i in range(len(models)):
-        f.write("{:s} {:d}\n".format(models[i], killed[i]))
-    f.close()
-    
+    with open(grid.replace('grids', 'killed') + '.killed', 'w') as f:
+        for i in range(len(models)):
+            f.write("{:s} {:d}\n".format(models[i], killed[i]))

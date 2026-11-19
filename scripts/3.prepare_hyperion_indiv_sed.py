@@ -1,11 +1,9 @@
 import os
 import sys
-import glob
 
 import numpy as np
 from astropy.table import Table
 from hyperion.model import Model, ModelOutput
-from hyperion.util.constants import au
 
 
 def quantity_table(model_out):
@@ -42,7 +40,7 @@ def setup_sed(model_out):
 
     # Read in model, and derive table of radial temperatures/densities
     m = Model.read(model_out, only_initial=False)
-    
+
     # The above code will retrieve the *initial* density of the model
     # but we need to take into account dust sublimation. Unfortunately
     # there is no built-in way to do this in Hyperion (yet) so we need
@@ -59,8 +57,8 @@ def setup_sed(model_out):
     density += density_diff
 
     # Find radius at which all temperatures are below 11K and all densities are
-    # below 1.1e-23, which we will treat as the background. For this we 
-    # don't care so much about dust sublimation since that affects the 
+    # below 1.1e-23, which we will treat as the background. For this we
+    # don't care so much about dust sublimation since that affects the
     # inner regions.
 
     t = quantity_table(model_out)
@@ -82,12 +80,10 @@ def setup_sed(model_out):
 
     # We now re-set the image parameters
 
-    n_ap = m.peeled_output[0].n_ap
     ap_min = m.peeled_output[0].ap_min
-    ap_max = m.peeled_output[0].ap_max
 
     m.peeled_output[0].set_depth(-largest_radius, largest_radius)
-    m.peeled_output[0].set_aperture_range(20, ap_min, largest_radius)
+    m.peeled_output[0].set_aperture_radii(20, ap_min, largest_radius)
 
     # We disable temperature iterations and re-set the number of photons
     m.set_n_initial_iterations(0)

@@ -1,5 +1,3 @@
-from __future__ import unicode_literals, division, print_function
-
 import glob
 import os
 import sys
@@ -34,7 +32,7 @@ for grid in glob.glob(os.path.join(directory,'s*-')):
         try:
             m = ModelOutput(model)
             sed = m.get_sed(distance=300*au, aperture=-1)
-        except:
+        except Exception:
             continue
         c += 1
         if c > NX * NY:
@@ -57,4 +55,3 @@ for grid in glob.glob(os.path.join(directory,'s*-')):
 
     fig.savefig('{grid_name}_page{page:03d}.pdf'.format(grid_name=grid_name, page=page))
     fig.clf()
-

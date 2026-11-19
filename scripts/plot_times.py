@@ -18,5 +18,4 @@ for grid in glob.glob('times/*.times'):
     ax.set_ylabel('number of models')
     ax.axvline(np.mean(times) / 3600.)
     print(grid, np.sum(times) / 3600., np.mean(times) / 3600.)
-    plt.close(fig)    
-    
+    plt.close(fig)
