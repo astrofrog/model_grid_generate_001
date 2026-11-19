@@ -6,7 +6,7 @@ import mysg
 import hyperion
 
 
-VERSION = "1.0.1"
+VERSION = "1.1"
 
 
 def create_anthill_files_sed(directory, set_name):
