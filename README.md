@@ -1,6 +1,26 @@
-This is the directory containing the scripts to set up the first set of
-model grids. The scripts in this directory require the mysg package
-which is common to all grids in this project.
+# A modular set of synthetic spectral energy distributions for young stellar objects
+
+## Info
+
+These are the scripts used to set up the model grid published in
+
+A modular set of synthetic spectral energy distributions for young stellar objects, Robitaille (2017)
+
+The initial version of the model grid was published on Zenodo at:
+
+https://doi.org/10.5281/zenodo.166732
+
+and
+
+https://doi.org/10.5281/zenodo.572233
+
+## Using
+
+The scripts in this directory require the
+[mysg](https://github.com/astrofrog/mysg) package which is common to all grids
+in this project. The package is not on PyPI and should be installed with e.g.:
+
+    pip install git+https://github.com/astrofrog/mysg.git
 
 To set up the grids:
 
