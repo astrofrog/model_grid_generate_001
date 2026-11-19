@@ -20,3 +20,13 @@ This again writes one job script per model. Each job runs
 scripts/3.prepare_hyperion_indiv_sed.py, which reads the output of the first
 step, removes the sublimated dust and sets the apertures, then runs Hyperion
 to compute the SEDs.
+
+For models in which the SED step takes too long to run, the SEDs can be
+computed without scattering instead, using:
+
+  python scripts/2.setup_grids_sed_noscat.py
+
+and the jobs written by this run scripts/3.prepare_hyperion_indiv_sed_noscat.py.
+
+The list of model sets that were run for the published grid is given in
+grids_all.txt.
