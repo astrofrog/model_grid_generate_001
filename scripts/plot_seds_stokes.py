@@ -1,5 +1,3 @@
-from __future__ import unicode_literals, division, print_function
-
 import glob
 import os
 import sys
@@ -17,7 +15,7 @@ if len(sys.argv) != 2:
     sys.exit(0)
 else:
     directory = sys.argv[1]
-    
+
 fig = plt.figure(figsize=(12,16))
 
 NX = 5
@@ -37,7 +35,7 @@ for grid in glob.glob(os.path.join(directory,'s*-')):
     page = 1
     for model in glob.glob(os.path.join(grid, 'output', '*', '*.rtout')):
         print(model)
-        
+
         c += 1
         if c > NX * NY:
             fig.savefig('{grid_name}_page{page:03d}.pdf'.format(grid_name=grid_name, page=page))
@@ -50,11 +48,11 @@ for grid in glob.glob(os.path.join(directory,'s*-')):
         try:
             m = ModelOutput(model)
             sed = m.get_sed(distance=300*au, aperture=-1)
-        except:
+        except Exception:
             continue
 
         for stokes in ['V', 'U', 'Q', 'I']:
-            sed = m.get_sed(distance=300*au, aperture=-1, stokes=stokes.encode('ascii'))
+            sed = m.get_sed(distance=300*au, aperture=-1, stokes=stokes)
             for incl in range(sed.val.shape[0]):
                 if np.any(sed.val[incl,:] > 0):
                     ax.loglog(sed.wav, sed.val[incl,:], color=COLOR[stokes], alpha=0.5)
@@ -66,4 +64,3 @@ for grid in glob.glob(os.path.join(directory,'s*-')):
 
     fig.savefig('{grid_name}_page{page:03d}.pdf'.format(grid_name=grid_name, page=page))
     fig.clf()
-

@@ -1,5 +1,3 @@
-from __future__ import unicode_literals, division, print_function
-
 import os
 import glob
 import sys
@@ -23,7 +21,7 @@ def setup_model_wrapper(parfile):
         setup_model(parfile, parfile.replace('.par', '').replace('/par/', '/input/'))
         sys.stdout = sys.__stdout__
         return True
-    except:
+    except Exception:
         sys.stdout = sys.__stdout__
         return False
 

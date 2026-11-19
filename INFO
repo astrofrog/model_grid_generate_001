@@ -1,10 +1,22 @@
-This is the directory contaning the scripts to set up the first set of 
-model grids. The scripts in this directory require the mysg package 
+This is the directory containing the scripts to set up the first set of
+model grids. The scripts in this directory require the mysg package
 which is common to all grids in this project.
 
-To run:
+To set up the grids:
 
-  python scripts/list_grids.py
-  python scripts/setup_grids.py
-  python scripts/prepare_hyperion.py
+  python scripts/1.list_grids.py
+  python scripts/2.setup_grids.py
 
+This writes one job script per model, and the jobs are then submitted with
+e.g. submit_all.sh. Each job runs scripts/3.prepare_hyperion_indiv.py to
+write the Hyperion input file for the model, then runs Hyperion to compute
+the temperatures.
+
+The SEDs are computed in a second step, once the first one has completed:
+
+  python scripts/2.setup_grids_sed.py
+
+This again writes one job script per model. Each job runs
+scripts/3.prepare_hyperion_indiv_sed.py, which reads the output of the first
+step, removes the sublimated dust and sets the apertures, then runs Hyperion
+to compute the SEDs.

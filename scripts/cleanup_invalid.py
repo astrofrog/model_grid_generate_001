@@ -1,14 +1,14 @@
 import os
 import sys
 import glob
-import h5py
+
 import numpy as np
 
 from astropy.utils.console import ProgressBar
 from astropy.table import Table
 
 if len(sys.argv) != 3:
-    print "Usage: python {0} grid_directory trash_directory".format(sys.argv[0])
+    print("Usage: python {0} grid_directory trash_directory".format(sys.argv[0]))
     sys.exit(0)
 else:
     directory = sys.argv[1]
@@ -52,8 +52,3 @@ for grid in glob.glob(os.path.join(directory, 's??????-----')):
                         os.rename(filename, os.path.join(grid_trash, os.path.basename(filename)))
                     except OSError:
                         pass
-
-                
-                
-
-            

@@ -2,11 +2,10 @@ import os
 import sys
 import glob
 import h5py
-import numpy as np
 from multiprocessing import Pool
 
 if len(sys.argv) != 2:
-    print "Usage: python {0} directory".format(sys.argv[0])
+    print("Usage: python {0} directory".format(sys.argv[0]))
     sys.exit(0)
 else:
     directory = sys.argv[1]
@@ -16,7 +15,7 @@ def find_time(filename):
         frt = h5py.File(filename, 'r')
         cpu_time = frt.attrs['cpu_time']
         frt.close()
-    except:
+    except Exception:
         return 0.
     else:
         return cpu_time
@@ -39,8 +38,6 @@ for grid in glob.glob(os.path.join(directory, 's??????-----')):
 
     times = p.map(find_time, models)
 
-    f = open(grid.replace(directory, 'times/') + '.times', 'w')
-    for i in range(len(models)):
-        f.write("{:s} {:.3f}\n".format(models[i], times[i]))
-    f.close()
-    
+    with open(grid.replace(directory, 'times/') + '.times', 'w') as f:
+        for i in range(len(models)):
+            f.write("{:s} {:.3f}\n".format(models[i], times[i]))

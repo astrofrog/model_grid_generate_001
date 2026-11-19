@@ -44,7 +44,7 @@ remove = []
 for model in models:
     if model[2] != '-' and model[5] == '-':
         remove.append(model)
-    if model[3] == 'b' and model[2] == '-':      
+    if model[3] == 'b' and model[2] == '-':
         remove.append(model)
     if model[4] == 'h' and model[:4] == 's---':
         remove.append(model)
@@ -67,8 +67,6 @@ for model in remove:
 models.sort()
 
 # Write the grids out to a file
-f = open('grids.txt', 'w')
-for model in models:
-    f.write("%s\n" % model)
-f.close()
-
+with open('grids.txt', 'w') as f:
+    for model in models:
+        f.write("%s\n" % model)

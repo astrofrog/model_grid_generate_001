@@ -7,7 +7,7 @@ from multiprocessing import Pool
 from astropy.table import Table
 
 if len(sys.argv) != 2:
-    print "Usage: python {0} directory".format(sys.argv[0])
+    print("Usage: python {0} directory".format(sys.argv[0]))
     sys.exit(0)
 else:
     directory = sys.argv[1]
@@ -16,9 +16,9 @@ def find_time(filename):
     try:
         frt = h5py.File(filename, 'r')
         cpu_time = frt.attrs['cpu_time']
-        sed = frt['Peeled']['group_00001']['seds']
+        frt['Peeled']['group_00001']['seds']
         frt.close()
-    except:
+    except Exception:
         print("PROBLEM", filename)
         raise
         return -1.
@@ -64,4 +64,3 @@ t['success_rate'].format = "%6.2f"
 t['total_time'] = total_time
 t['total_time'].format = "%.2f"
 print(t)
-

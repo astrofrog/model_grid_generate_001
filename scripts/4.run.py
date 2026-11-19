@@ -1,5 +1,3 @@
-from __future__ import unicode_literals, division, print_function
-
 import glob
 import os
 
