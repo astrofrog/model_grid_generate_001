@@ -24,15 +24,15 @@ in this project. The package is not on PyPI and should be installed with e.g.:
 The published v1.1 grid was computed with mysg 1.1. The dust file included in
 that version had an albedo and scattering matrix that had been computed with
 a version of the Mie code that had a bug (the extinction is within 1% of the
-correct one), and this has been fixed in later versions of mysg, which get
-the dust properties from the
+correct one), and this has been fixed in mysg 1.2 and later, which get the
+dust properties from the
 [hyperion-dust](https://github.com/hyperion-rt/hyperion-dust) package. The
 command above therefore installs a version of mysg with the corrected dust,
-which will not give the same SEDs as the published grid. To install the
-version of mysg used for the published grid instead, which only works with
-Python 2, use:
+which will not give the same SEDs as the published grid. To set up the same
+models as in the published grid, install mysg 1.1.1 instead, which is mysg
+1.1 updated to work with Python 3 and current versions of Hyperion:
 
-    pip install git+https://github.com/astrofrog/mysg.git@v1.1.0
+    pip install git+https://github.com/astrofrog/mysg.git@v1.1.1
 
 To set up the grids:
 
